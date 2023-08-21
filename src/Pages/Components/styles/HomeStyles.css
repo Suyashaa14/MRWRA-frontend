@@ -1,0 +1,108 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Use a dark background color */
+body {
+  background-color: #141414;
+  font-family: "Montserrat", sans-serif;
+}
+/* Update HomePage styles */
+
+.HomePage {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../images/wallpaper7.jpg");
+  background-size: cover;
+  padding: 120px 0;
+  text-align: center;
+  color: #fff;
+}
+
+/* Update genre header */
+.genreHeader {
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+/* Update buttonGrid styles */
+.buttonGrid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.genreTagON,
+.genreTagOFF {
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.genreTagON {
+  background-color: #e50914;
+  color: #fff;
+}
+
+.genreTagOFF {
+  background-color: transparent;
+  color: #e50914;
+  border: 1px solid #e50914;
+}
+
+.genreTagON:hover,
+.genreTagOFF:hover {
+  background-color: #c00f1d;
+}
+
+/* Update MovieCard styles */
+.MovieCard {
+  background-color: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.MovieCard:hover {
+  transform: scale(1.05);
+}
+
+.MovieCard-image {
+  width: 100%;
+  height: auto;
+}
+
+/* Update HomeFooter styles */
+.HomeFooter {
+  background-color: #000;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Update media queries for responsiveness */
+@media screen and (max-width: 768px) {
+  .buttonGrid {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .HomePage {
+    padding: 80px 0;
+  }
+
+  .genreHeader {
+    font-size: 24px;
+  }
+
+  .buttonGrid {
+    width: 90%;
+  }
+}

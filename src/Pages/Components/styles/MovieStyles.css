@@ -1,0 +1,106 @@
+.MoviePage {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../images/wallpaper4.jpg");
+  width: 100%;
+  height: 30vh; /* Reduced the height for a better view of content */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  padding-top: 80px; /* Adjusted to center content vertically */
+}
+
+.MoviesSearch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0; /* Adjusted margin for better spacing */
+}
+
+.genreHeader {
+  color: white;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  margin-top: 60px;
+}
+
+.buttonGrid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  max-width: 800px;
+}
+
+.genreTagON,
+.genreTagOFF {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  padding: 8px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.genreTagON {
+  background-color: #e50914;
+  color: white;
+}
+
+.genreTagOFF {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+.genreTagON:hover {
+  background-color: #b2070e;
+}
+
+.genreTagOFF:hover {
+  background-color: #ffffff;
+  color: black;
+}
+
+.HomeMovies {
+  width: 100%;
+  background-color: #000;
+  padding-top: 30px;
+  padding-bottom: 100px;
+}
+
+.HomeMovieGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 1200px) {
+  .HomeMovieGrid {
+    gap: 15px;
+  }
+
+  .MoviePage {
+    height: 25vh; /* Adjusted for smaller screens */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .MoviePage {
+    padding-top: 60px;
+  }
+
+  .genreHeader {
+    font-size: 24px;
+  }
+}

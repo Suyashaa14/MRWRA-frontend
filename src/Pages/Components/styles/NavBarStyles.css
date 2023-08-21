@@ -1,0 +1,66 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #141414;
+  padding: 10px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.navbar__logo {
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #e50914;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar__link {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar__link:hover {
+  background-color: #e50914;
+}
+
+.navbar__logout-btn {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  border-radius: 4px;
+  background-color: #e50914;
+  transition: background-color 0.3s ease;
+}
+
+.navbar__logout-btn:hover {
+  background-color: #c00f1d;
+}
