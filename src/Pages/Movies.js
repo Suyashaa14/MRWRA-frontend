@@ -3,6 +3,7 @@ import MovieCard from "./Components/MovieCard";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import "./Components/styles/MovieStyles.css";
+import RandomMoviePicker from "./RandomMoviePicker";
 
 const MoviePage = () => {
   const apiKey = "api_key=b97316ed479ee4226afefc88d1792909";
@@ -70,6 +71,8 @@ const MoviePage = () => {
             </div>
           </div>
         </div>
+        <RandomMoviePicker list={list} />
+
         {/* Rendering recommended movies */}
         <div style={{ maxWidth: "90vw", margin: "0 auto" }}>
           {recommendedMovies.length > 0 && (

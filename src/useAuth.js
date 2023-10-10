@@ -4,8 +4,6 @@ export function useAuth() {
   const navigate = useNavigate();
 
   const isAuthenticated = () => {
-    // Replace this with your authentication logic
-    // For example, check if the JWT token is present in localStorage or a cookie
     const jwtToken = localStorage.getItem("jwtToken");
     return !!jwtToken;
   };

@@ -1,5 +1,6 @@
 import "./App.css";
 import MovieCard from "./Pages/Components/MovieCard";
+import Watchlist from "./Pages/WatchList";
 import Home from "./Pages/Home";
 import MovieRatings from "./Pages/MovieRatings";
 import Movies from "./Pages/Movies";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/movie" element={<Movies />} />
+          <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/about" element={<About />} />
           <Route path="/movieratings" element={<MovieRatings />} />
           <Route path="/search/:id" element={<SearchResult />} />

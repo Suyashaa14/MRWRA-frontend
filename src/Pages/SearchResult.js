@@ -67,9 +67,7 @@ const SearchResult = () => {
       setSearchedMovie(realMovieData);
       fetch(
         `https://api.themoviedb.org/3/movie/${realMovieData.id}/credits?${apiKey}`
-      ).then((Response) =>
-        Response.json().then((data) => gotCast(data.cast))
-      );
+      ).then((Response) => Response.json().then((data) => gotCast(data.cast)));
 
       fetch(
         `https://api.themoviedb.org/3/movie/${realMovieData.id}?${apiKey}&append_to_response=videos`
@@ -89,6 +87,17 @@ const SearchResult = () => {
     );
   }, [inputValue]);
 
+  const streamingLinks = [
+    {
+      platform: "Netflix",
+      link: `https://www.netflix.com/${searchedMovie.id}`,
+    },
+    {
+      platform: "Amazon Prime",
+      link: `https://www.amazon.com/${searchedMovie.id}`,
+    },
+    // ... add more streaming links here
+  ];
   const RenderMovies = () =>
     recommendedMovies.map((movie) => (
       <MovieCard key={movie.id + movie.original_title} movie={movie} />
@@ -97,16 +106,16 @@ const SearchResult = () => {
   const RenderTrailer = () => {
     return (
       <div className="trailer-overlay" onClick={() => setPlayTrailer(false)}>
-      <div className="trailer-video-container">
-        <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${videoData.key}-U`}
-          playing={true}
-          width="100%"
-          height="100%"
-          className="youtube-container"
-        />
+        <div className="trailer-video-container">
+          <ReactPlayer
+            url={`https://www.youtube.com/watch?v=${videoData.key}-U`}
+            playing={true}
+            width="100%"
+            height="100%"
+            className="youtube-container"
+          />
+        </div>
       </div>
-    </div>
     );
   };
 
@@ -175,8 +184,9 @@ const SearchResult = () => {
             ))}
           </div>
           <div className="rating">
-             <b>Rating: </b>
-                {searchedMovie.vote_average?.toFixed(1)}/10 <i className="fas fa-star"></i>
+            <b>Rating: </b>
+            {searchedMovie.vote_average?.toFixed(1)}/10{" "}
+            <i className="fas fa-star"></i>
           </div>
 
           <div className="release-date">
@@ -204,10 +214,25 @@ const SearchResult = () => {
         </div>
       </div>
 
-      <div className={playTrailer ? "trailer-overlay" : "trailer-overlay-hidden"}>
+      <div
+        className={playTrailer ? "trailer-overlay" : "trailer-overlay-hidden"}
+      >
         <div className="trailer-video-container">
           {videoData && playTrailer ? RenderTrailer() : null}
         </div>
+      </div>
+
+      <div className="streaming-links">
+        <h3>Available on:</h3>
+        <ul>
+          {streamingLinks.map((linkInfo) => (
+            <li key={linkInfo.platform}>
+              <a href={linkInfo.link} target="_blank" rel="noopener noreferrer">
+                {linkInfo.platform}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div className="recommended-movies">

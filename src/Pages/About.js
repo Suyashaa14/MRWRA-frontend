@@ -2,11 +2,13 @@ import React from "react";
 import { Container, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import NavBar from "./Components/NavBar";
+import MovieList from "./Admin";
 
 const About = () => {
   return (
     <>
       <NavBar />
+      <MovieList />
       <Container maxWidth="md" sx={{ mt: 4 }}>
         <Typography variant="h4" gutterBottom sx={{ color: "#fff" }}>
           About Movie Recommendation with Review Analysis
