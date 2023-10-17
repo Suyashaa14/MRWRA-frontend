@@ -1,162 +1,104 @@
-import React, { useState } from "react";
-import axios from "axios";
-import {
-  TextField,
-  Button,
-  Typography,
-  Container,
-  Box,
-  Snackbar,
-  IconButton,
-  InputAdornment,
-} from "@mui/material";
-import MuiAlert from "@mui/material/Alert";
-import { useNavigate } from "react-router-dom";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import React, { useState } from 'react';
+import { TextField, Button, Typography, Container, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import axios from 'axios';
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleShowPassword = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword);
-  };
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user'); // Default role is set to 'user'
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:5000/api/register",
-        formData
-      );
-      setSnackbarMessage("Account created successfully!");
-      setSnackbarSeverity("success");
-      setSnackbarOpen(true);
-      console.log(response.data); // Handle success
-
-      // Clear the form data after successful signup
-      setFormData({
-        email: "",
-        password: "",
+      // Send a POST request to your backend API endpoint for signup
+      const response = await axios.post('http://localhost:8005/auth/register', {
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
       });
 
-      // Optionally, you can redirect to the login page after a delay (e.g., 2 seconds)
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      // Handle successful signup response (if needed)
+      console.log(response.data);
+
+      // Optionally, you can redirect the user to a login page after successful signup
+      // Example: history.push('/login');
     } catch (error) {
-      setSnackbarMessage("Error creating account.");
-      setSnackbarSeverity("error");
-      setSnackbarOpen(true);
-      console.error(error); // Handle error
+      setError('Signup failed. Please try again.'); // Handle signup failure
     }
   };
 
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
-
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor: "black",
-          padding: "30px",
-          borderRadius: "8px",
-        }}
-      >
-        <Typography component="h1" variant="h4" sx={{ color: "white" }}>
-          Create an Account
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
+    <Container maxWidth="sm" sx={{ backgroundColor: '#1a1a1a', color: '#fff', padding: '20px', borderRadius: '10px' }}>
+      <Typography variant="h4" align="center" gutterBottom>
+        Signup
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="First Name"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+          InputLabelProps={{ style: { color: '#fff' } }}
+        />
+        <TextField
+          label="Last Name"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+          InputLabelProps={{ style: { color: '#fff' } }}
+        />
+        <TextField
+          label="Email"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          InputLabelProps={{ style: { color: '#fff' } }}
+        />
+        <TextField
+          label="Password"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          InputLabelProps={{ style: { color: '#fff' } }}
+        />
+        <FormControl variant="outlined" fullWidth margin="normal">
+          <InputLabel id="role-label" style={{ color: '#fff' }}>Role</InputLabel>
+          <Select
+            labelId="role-label"
+            label="Role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
             required
-            autoFocus
-            InputLabelProps={{
-              shrink: true,
-              sx: { color: "red", fontSize: "18px" }, // Adjust font size and color
-            }}
-            sx={{ backgroundColor: "white", borderRadius: "4px" }}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-            value={formData.password}
-            onChange={handleChange}
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            InputLabelProps={{
-              shrink: true,
-              sx: { color: "red", fontSize: "18px" }, // Adjust font size and color
-            }}
-            sx={{ backgroundColor: "white", borderRadius: "4px" }}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, backgroundColor: "#e50914" }}
           >
-            Sign Up
-          </Button>
-          <a href="/login" style={{ color: "white" }}>
-            Already have an account? Sign in
-          </a>
-        </Box>
-      </Box>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <MuiAlert
-          onClose={handleSnackbarClose}
-          severity={snackbarSeverity}
-          sx={{ width: "100%" }}
-        >
-          {snackbarMessage}
-        </MuiAlert>
-      </Snackbar>
+            <MenuItem value="user">User</MenuItem>
+            <MenuItem value="admin">Admin</MenuItem>
+          </Select>
+        </FormControl>
+        <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: '20px' }}>
+          Signup
+        </Button>
+        {error && <Typography variant="body2" color="error" style={{ marginTop: '10px' }}>{error}</Typography>}
+      </form>
     </Container>
   );
 };
