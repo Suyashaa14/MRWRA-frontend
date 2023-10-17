@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+import axios from "axios";
 
 const AddMovie = () => {
   const [movieData, setMovieData] = useState({
@@ -33,27 +34,30 @@ const AddMovie = () => {
       parsedValue = name === "year" ? parseInt(value) : parseFloat(value);
     }
 
-    setMovieData({ ...movieData, [name]: parsedValue });
+    // setMovieData({ ...movieData, [name]: parsedValue });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare the data to be sent in the request body
-    const requestData = {
-      ...movieData,
-      movieId: "tt1234567", // You can set the movieId as needed
-    };
+    // Create a FormData object to send form data
+    // const formData = new FormData();
+    // console.log(movieData);
+    // Append each form field to the FormData object
+    // for (const key in movieData) {
+    //   formData.append(key, movieData[key]);
+    // }
+
+    // You can also add additional fields to the FormData object if needed
+    // formData.append("movieId", "tt1234567");
 
     try {
-      const response = await fetch("http://localhost:8005/movies/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestData),
-      });
+      console.log(movieData);
+      const response = await axios.post(
+        `http://localhost:8005/movies/create`,
+        movieData
+      );
 
-      if (response.ok) {
+      if (response.status === 200) {
         console.log("Movie data sent successfully!");
         // Handle success
       } else {
