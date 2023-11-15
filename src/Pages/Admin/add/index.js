@@ -34,8 +34,10 @@ const AddMovie = () => {
       parsedValue = name === "year" ? parseInt(value) : parseFloat(value);
     }
 
-    // setMovieData({ ...movieData, [name]: parsedValue });
+    // Uncomment the following line to update the state
+    setMovieData({ ...movieData, [name]: parsedValue });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

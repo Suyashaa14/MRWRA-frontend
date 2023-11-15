@@ -12,10 +12,9 @@ const Home = () => {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [currMovies, setCurrMovies] = useState([{}]);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
-  const [sortOrder, setSortOrder] = useState("aesc"); // Default sorting order
+  const [sortOrder, setSortOrder] = useState("aesc");
 
   const moviesSectionRef = useRef(null);
-  // Helper function to get the name of the selected genre
   const getGenreName = (genreId) => {
     const genre = homeGenreList.find((genre) => genre.id === genreId);
     return genre ? genre.name : "";
@@ -25,7 +24,6 @@ const Home = () => {
     setSelectedGenres([]);
     setHomeGenreList([]);
     setList([]);
-    // Getting the list of all movies from our flask server for our search bar
     fetch("/api/movies")
       .then((response) => response.json())
       .then((data) => setList(data.arr));
