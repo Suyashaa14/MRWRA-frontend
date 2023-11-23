@@ -132,27 +132,45 @@ import Footer from "./Components/Footer";
 import "./Components/styles/MovieStyles.css";
 import RandomMoviePicker from "./RandomMoviePicker";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const MoviePage = () => {
+  const navigate = useNavigate();
   const [list, setList] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [userData, setUserData] = useState("");
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
+    getUserData();
+    getAllMovies();
+  }, []);
+
+  const getUserData = () => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      const decodedToken = jwtDecode(storedToken);
+      setUserData(decodedToken);
+    }
+  }
+  const getAllMovies = () => {
     axios
-      .get("/movies")
+      .get("http://localhost:8005/movies")
       .then((response) => {
         setMovies(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, []);
-
+  }
   const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchText.toLowerCase())
   );
-
+   const handleAddAdmin = () => {
+    navigate("/home");
+   }
+ 
   return (
     <>
       <NavBar />
@@ -180,6 +198,15 @@ const MoviePage = () => {
             </div>
           </div>
         </div>
+        {
+          userData.role == "user" ? 
+          (
+          <button className="button" onClick={handleAddAdmin}>
+            Add Admin
+          </button>
+          ) : 
+          ("")
+        }
         <RandomMoviePicker list={list} />
         <div className="container-fluid HomeMovies">
           <h1 style={{ textAlign: "center" }}>Movies</h1>

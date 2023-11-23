@@ -33,7 +33,6 @@ const LoginForm = () => {
       const response = await axios.post("http://localhost:8005/auth/login", {
         email,
         password,
-        role: "user",
       });
 
       const { token } = response.data;

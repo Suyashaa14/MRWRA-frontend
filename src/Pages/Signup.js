@@ -20,7 +20,6 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
   const [error, setError] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -42,7 +41,6 @@ const Signup = () => {
         lastName,
         email,
         password,
-        role,
       });
 
       // Show success message and open success Snackbar
@@ -111,21 +109,6 @@ const Signup = () => {
           required
           InputLabelProps={{ style: { color: "#fff" } }}
         />
-        <FormControl variant="outlined" fullWidth margin="normal">
-          <InputLabel id="role-label" style={{ color: "#fff" }}>
-            Role
-          </InputLabel>
-          <Select
-            labelId="role-label"
-            label="Role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            required
-          >
-            <MenuItem value="user">User</MenuItem>
-            <MenuItem value="admin">Admin</MenuItem>
-          </Select>
-        </FormControl>
         <Button
           type="submit"
           variant="contained"
