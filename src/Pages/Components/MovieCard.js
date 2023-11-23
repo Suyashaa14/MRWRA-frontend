@@ -3,7 +3,6 @@ import "./styles/Card.css";
 import { useNavigate } from "react-router-dom";
 const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
-
   const currentMovie = movie.title;
   // opening the clicked movie
   const goToMovie = () => {
@@ -14,18 +13,19 @@ const MovieCard = ({ movie }) => {
 
   return (
     <div onClick={goToMovie} className="Main-Card">
-      {movie.poster_path && (
+      {movie.poster && (
         <img
-          src={img_path + movie.poster_path}
+          // src={img_path + movie.poster_path}
+          src={movie.poster}
           alt={movie.title}
           title={movie.title}
           className="Poster"
         />
       )}
       <div className="Movie-Title">{movie.title}</div>
-      {movie.vote_average ? (
+      {movie.rating ? (
         <span className={"movie-voting"}>
-          {movie.vote_average}
+          {movie.rating}
           <i class="fa fa-star" aria-hidden="true"></i>
         </span>
       ) : null}
