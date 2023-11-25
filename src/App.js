@@ -10,6 +10,8 @@ import MoviePage from "./Pages/Movies";
 import SearchResult from "./Pages/SearchResult";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import About from "./Pages/About";
+import MovieDetail from "./Pages/MovieDetail";
+import AddMovie from "./Pages/Admin/add";
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/movie" element={<Movies />} />
+          <Route path="/admin" element={<AddMovie />} />
           <Route path="/watchlist" element={<Watchlist />} />
+          <Route path="/movie/:id" element={<MovieDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/movieratings" element={<MovieRatings />} />
           <Route path="/search/:id" element={<SearchResult />} />

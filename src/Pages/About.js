@@ -8,7 +8,6 @@ const About = () => {
   return (
     <>
       <NavBar />
-      <MovieList />
       <Container maxWidth="md" sx={{ mt: 4 }}>
         <Typography variant="h4" gutterBottom sx={{ color: "#fff" }}>
           About Movie Recommendation with Review Analysis

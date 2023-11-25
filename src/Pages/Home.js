@@ -264,6 +264,8 @@ import "./Components/styles/HomeStyles.css";
 import MovieCard from "./Components/MovieCard";
 import SearchBar from "./Components/SearchBar";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [homeGenreList, setHomeGenreList] = useState([]);
@@ -273,6 +275,7 @@ const Home = () => {
   const [sortOrder, setSortOrder] = useState("aesc");
   const [movies, setMovies] = useState([]);
   const moviesSectionRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch movies and genres from your NestJS API
@@ -331,8 +334,16 @@ const Home = () => {
     });
   };
 
+  const handleClick = (id) => {
+    navigate(`/movie/${id}`);
+  };
+
   const renderMovies = () =>
-    currMovies.map((movie) => <MovieCard key={movie.id} movie={movie} />);
+    currMovies.map((movie) => (
+      <div key={movie.id} onClick={() => handleClick(movie.id)}>
+        <MovieCard movie={movie} />
+      </div>
+    ));
 
   return (
     <>
@@ -377,7 +388,7 @@ const Home = () => {
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div> */}
-        <div style={{ maxWidth: "90vw" }}>
+        {/* <div style={{ maxWidth: "90vw" }}>
           {recommendedMovies.length > 0 && (
             <>
               <div>
@@ -403,7 +414,7 @@ const Home = () => {
               </div>
             </>
           )}
-        </div>
+        </div> */}
         {/* Rendering selected genre movies */}
         <div style={{ color: "white", margin: "40px" }}>
           <button

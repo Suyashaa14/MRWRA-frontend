@@ -148,12 +148,12 @@ const MoviePage = () => {
   }, []);
 
   const getUserData = () => {
-    const storedToken = localStorage.getItem('token');
+    const storedToken = localStorage.getItem("token");
     if (storedToken) {
       const decodedToken = jwtDecode(storedToken);
       setUserData(decodedToken);
     }
-  }
+  };
   const getAllMovies = () => {
     axios
       .get("http://localhost:8005/movies")
@@ -163,14 +163,14 @@ const MoviePage = () => {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }
+  };
   const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchText.toLowerCase())
   );
-   const handleAddAdmin = () => {
-    navigate("/home");
-   }
- 
+  const handleAddAdmin = () => {
+    navigate("/admin");
+  };
+
   return (
     <>
       <NavBar />
@@ -198,15 +198,13 @@ const MoviePage = () => {
             </div>
           </div>
         </div>
-        {
-          userData.role == "user" ? 
-          (
+        {userData.role == "admin" ? (
           <button className="button" onClick={handleAddAdmin}>
             Add Admin
           </button>
-          ) : 
-          ("")
-        }
+        ) : (
+          ""
+        )}
         <RandomMoviePicker list={list} />
         <div className="container-fluid HomeMovies">
           <h1 style={{ textAlign: "center" }}>Movies</h1>
