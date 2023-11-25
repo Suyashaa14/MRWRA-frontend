@@ -351,11 +351,11 @@ const Home = () => {
       <div className="container-fluid">
         <div className="HomePage">
           {/* Rendering the search bar */}
-          <SearchBar
+          {/* <SearchBar
             placeholder="Search for a Movie"
             setRecommendedMovies={setRecommendedMovies}
             moviesSectionRef={moviesSectionRef}
-          />
+          /> */}
 
           <h2 className="genreHeader">Get Top Movies Based On Genre </h2>
           <div className="buttonGrid">

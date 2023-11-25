@@ -9,10 +9,14 @@ const MovieCard = ({ movie }) => {
     navigate(`/search/${currentMovie}`);
     // window.location.reload();
   };
+  const handleClick = (id) => {
+    navigate(`/movie/${id}`);
+  };
+
   const img_path = "https://image.tmdb.org/t/p/w342";
 
   return (
-    <div onClick={goToMovie} className="Main-Card">
+    <div onClick={() => handleClick(movie.id)} className="Main-Card">
       {movie.poster && (
         <img
           // src={img_path + movie.poster_path}

@@ -11,7 +11,10 @@ import SearchResult from "./Pages/SearchResult";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import About from "./Pages/About";
 import MovieDetail from "./Pages/MovieDetail";
-import AddMovie from "./Pages/Admin/add";
+import AddMovie from "./Pages/Admin/addmovie";
+import ForgotPassword from "./Pages/ForgotPassword";
+import ResetPassword from "./Pages/ResetPassword";
+import AddAdmin from "./Pages/Admin/addadmin";
 
 function App() {
   return (
@@ -23,7 +26,10 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/movie" element={<Movies />} />
           <Route path="/admin" element={<AddMovie />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/watchlist" element={<Watchlist />} />
+          <Route path="/addadmin" element={<AddAdmin />} />
           <Route path="/movie/:id" element={<MovieDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/movieratings" element={<MovieRatings />} />

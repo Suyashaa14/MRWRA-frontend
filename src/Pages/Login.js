@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   TextField,
   Button,
   Typography,
   Container,
   Snackbar,
+  Checkbox,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import axios from "axios";
@@ -17,6 +18,7 @@ const LoginForm = () => {
   const [error, setError] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -80,13 +82,24 @@ const LoginForm = () => {
           variant="outlined"
           fullWidth
           margin="normal"
-          type="password"
+          type={showPassword ? "text" : "password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           color="primary"
           InputLabelProps={{ style: { color: "#fff" } }}
         />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Checkbox
+            checked={showPassword}
+            onChange={() => setShowPassword(!showPassword)}
+          />
+          <Typography>Show Password</Typography>
+          <Link to="/forgotPassword" style={{ marginLeft: "7rem" }}>
+            Forgot Password?
+          </Link>
+        </div>
+
         <Button
           type="submit"
           variant="contained"

@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./styles/NavBarStyles.css";
+import jwtDecode from "jwt-decode";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState("");
 
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = () => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      const decodedToken = jwtDecode(storedToken);
+      setUserData(decodedToken);
+    }
+  };
   // Function to handle logout
   const handleLogout = () => {
     // Clear the token from local storage
@@ -26,9 +39,16 @@ const NavBar = () => {
           <Link to="/movie" className="navbar__link">
             Movies
           </Link>
-          <Link to="/watchlist" className="navbar__link">
-            Watchlist
-          </Link>
+          {userData.role == "admin" ? (
+            <Link to="/addadmin" className="navbar__link">
+              Add Admin
+            </Link>
+          ) : (
+            <Link to="/watchlist" className="navbar__link">
+              Watchlist
+            </Link>
+          )}
+
           <Link to="/about" className="navbar__link">
             About
           </Link>

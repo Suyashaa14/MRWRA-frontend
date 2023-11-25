@@ -198,16 +198,33 @@ const MoviePage = () => {
             </div>
           </div>
         </div>
-        {userData.role == "admin" ? (
-          <button className="button" onClick={handleAddAdmin}>
-            Add Admin
-          </button>
-        ) : (
-          ""
-        )}
-        <RandomMoviePicker list={list} />
+
         <div className="container-fluid HomeMovies">
-          <h1 style={{ textAlign: "center" }}>Movies</h1>
+          {userData.role == "admin" ? (
+            <div
+              style={{
+                width: "83%",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <button className="button" onClick={handleAddAdmin} style={{}}>
+                Add Movie
+              </button>
+            </div>
+          ) : (
+            <RandomMoviePicker list={list} />
+          )}
+
+          <h1
+            style={{
+              textAlign: "center",
+              color: "white",
+              marginBottom: "40px",
+            }}
+          >
+            Movies
+          </h1>
           <div className="container HomeMovieGrid">
             {filteredMovies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />

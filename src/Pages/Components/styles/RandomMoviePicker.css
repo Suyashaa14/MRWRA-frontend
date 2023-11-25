@@ -1,11 +1,8 @@
 /* RandomMoviePicker.css */
 
 .random-movie-picker {
-  background-color: #141414;
   color: white;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
 

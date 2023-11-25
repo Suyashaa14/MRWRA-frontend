@@ -1,5 +1,5 @@
 import React from "react";
-import AddMovie from "./add";
+import AddMovie from "./addmovie";
 
 function MovieList() {
   return (
