@@ -4,6 +4,7 @@ import axios from "axios";
 import "./Components/styles/MovieDetails.css";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
+import jwtDecode from "jwt-decode";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const MovieDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/movies/${id}`)
+      .get(`http://localhost:8005/movies/${id}`)
       .then((response) => {
         setMovie(response.data);
       })
@@ -28,10 +29,15 @@ const MovieDetail = () => {
 
     // Submit the user's comment
     try {
+      const storedToken = localStorage.getItem("token");
+      const decodedToken = jwtDecode(storedToken);
+      console.log(decodedToken.id)
       const response = await axios.post(
-        `http://localhost:3000/movies/${id}/comments`,
+        `http://localhost:8005/movies/${id}/comments`,
         {
           comment: userComment,
+          userId: decodedToken.id
+
         }
       );
 
