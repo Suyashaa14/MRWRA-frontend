@@ -417,7 +417,7 @@ const Home = () => {
         </div> */}
         {/* Rendering selected genre movies */}
         <div style={{ color: "white", margin: "40px" }}>
-          <button
+          {/* <button
             style={{
               backgroundColor: "#e50914",
               color: "white",
@@ -434,7 +434,7 @@ const Home = () => {
             {sortOrder === "desc"
               ? "Sort by Lowest Rating"
               : "Sort by Highest Rating"}
-          </button>
+          </button> */}
           {selectedGenres.length > 0 && (
             <h2 style={{ textAlign: "center" }}>
               Genre: {selectedGenres.join(", ")}

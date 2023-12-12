@@ -9,7 +9,7 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import axios from "axios";
 import NavBar from "../../Components/NavBar";
 import Footer from "../../Components/Footer";
-
+import { useNavigate } from "react-router-dom";
 const AddMovie = () => {
   const [movieData, setMovieData] = useState({
     title: "",
@@ -26,6 +26,7 @@ const AddMovie = () => {
     stars: "",
     trailer: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,12 +56,12 @@ const AddMovie = () => {
     // formData.append("movieId", "tt1234567");
 
     try {
-      console.log(movieData);
       const response = await axios.post(
         `http://localhost:8005/movies/create`,
         movieData
       );
 
+      navigate("/movie");
       if (response.status === 200) {
         console.log("Movie data sent successfully!");
       } else {

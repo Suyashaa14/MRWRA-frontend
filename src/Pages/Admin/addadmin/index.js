@@ -4,20 +4,18 @@ import {
   Button,
   Typography,
   Container,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-  Link,
   Snackbar,
+  CssBaseline,
+  Paper,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
-import axios from "axios";
 import NavBar from "../../Components/NavBar";
 import Footer from "../../Components/Footer";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AddAdmin = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -51,7 +49,7 @@ const AddAdmin = () => {
       setOpenSnackbar(true);
     } catch (error) {
       // Handle signup failure and show error Snackbar
-      setError("Signup failed. Please try again.");
+      setError("Add Admin failed. Please try again.");
       setOpenSnackbar(true);
     }
   };
@@ -59,96 +57,111 @@ const AddAdmin = () => {
   return (
     <>
       <NavBar />
+      <CssBaseline />
       <Container
-        maxWidth="sm"
+        component="main"
+        maxWidth="xs"
         sx={{
-          backgroundColor: "#1a1a1a",
-          color: "#fff",
-          padding: "20px",
-          borderRadius: "10px",
+          marginTop: "5%",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <Typography variant="h4" align="center" gutterBottom>
-          Add Admin
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="First Name"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-            InputLabelProps={{ style: { color: "#fff" } }}
-          />
-          <TextField
-            label="Last Name"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-            InputLabelProps={{ style: { color: "#fff" } }}
-          />
-          <TextField
-            label="Email"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            InputLabelProps={{ style: { color: "#fff" } }}
-          />
-          <TextField
-            label="Password"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            InputLabelProps={{ style: { color: "#fff" } }}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            style={{ marginTop: "20px" }}
+        <Paper
+          elevation={3}
+          sx={{
+            padding: "30px",
+            textAlign: "center",
+            background: "#1a1a1a",
+          }}
+        >
+          <Typography
+            component="h1"
+            variant="h4"
+            gutterBottom
+            style={{ color: "#fff" }}
           >
             Add Admin
-          </Button>
-          {error && (
-            <Typography
-              variant="body2"
-              color="error"
-              style={{ marginTop: "10px" }}
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label="First Name"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              InputProps={{ style: { color: "#fff" } }}
+            />
+            <TextField
+              label="Last Name"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+              InputProps={{ style: { color: "#fff" } }}
+            />
+            <TextField
+              label="Email"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              InputProps={{ style: { color: "#fff" } }}
+            />
+            <TextField
+              label="Password"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              InputProps={{ style: { color: "#fff" } }}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              style={{ marginTop: "20px", backgroundColor: "#FF0000" }}
             >
-              {error}
-            </Typography>
-          )}
-        </form>
-
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={6000}
-          onClose={handleSnackbarClose}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <MuiAlert
-            elevation={6}
-            variant="filled"
+              Add Admin
+            </Button>
+            {error && (
+              <Typography
+                variant="body2"
+                color="error"
+                style={{ marginTop: "10px", color: "#fff" }}
+              >
+                {error}
+              </Typography>
+            )}
+          </form>
+          <Snackbar
+            open={openSnackbar}
+            autoHideDuration={6000}
             onClose={handleSnackbarClose}
-            severity={error ? "error" : "success"}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
           >
-            {snackbarMessage || error}
-          </MuiAlert>
-        </Snackbar>
+            <MuiAlert
+              onClose={handleSnackbarClose}
+              severity={error ? "error" : "success"}
+              sx={{ width: "100%" }}
+            >
+              {snackbarMessage || error}
+            </MuiAlert>
+          </Snackbar>
+        </Paper>
       </Container>
       <Footer />
     </>

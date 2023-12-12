@@ -39,22 +39,18 @@ const NavBar = () => {
           <Link to="/movie" className="navbar__link">
             Movies
           </Link>
-          {userData.role == "admin" ? (
+          {userData.role == "admin" && (
             <Link to="/addadmin" className="navbar__link">
               Add Admin
-            </Link>
-          ) : (
-            <Link to="/watchlist" className="navbar__link">
-              Watchlist
             </Link>
           )}
 
           <Link to="/about" className="navbar__link">
             About
           </Link>
-          <Link to="/movieratings" className="navbar__link">
+          {/* <Link to="/movieratings" className="navbar__link">
             Review and Ratings
-          </Link>
+          </Link> */}
         </div>
         <Link to="/login" className="navbar__logout-btn" onClick={handleLogout}>
           Logout

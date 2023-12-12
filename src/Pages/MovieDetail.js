@@ -1,28 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import YouTube from "react-youtube";
 import "./Components/styles/MovieDetails.css";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import jwtDecode from "jwt-decode";
+import StarRating from "./Components/StarRating";
 
 const MovieDetail = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const [userComment, setUserComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [userComment, setUserComment] = useState("");
   const [loadingComments, setLoadingComments] = useState(false);
+  const [trailerOpen, setTrailerOpen] = useState(false);
+  const [userRating, setUserRating] = useState(0);
 
   useEffect(() => {
+    // Fetch movie details
     axios
       .get(`http://localhost:8005/movies/${id}`)
       .then((response) => {
         setMovie(response.data);
+
+        // If the trailer URL is available, extract the video ID and update the movie object
+        if (response.data.trailer) {
+          const videoId = extractYouTubeVideoId(response.data.trailer);
+          setMovie((prevMovie) => ({ ...prevMovie, trailerVideoId: videoId }));
+        }
       })
       .catch((error) => {
         console.error("Error fetching movie details: ", error);
       });
+
+    // Fetch comments for the movie
+    axios
+      .get(`http://localhost:8005/movies/${id}/comments`)
+      .then((response) => {
+        setComments(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching movie comments: ", error);
+      });
   }, [id]);
+
+  const extractYouTubeVideoId = (url) => {
+    // Example URL: https://www.youtube.com/watch?v=VIDEO_ID
+    const match = url.match(
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+    );
+    return match ? match[1] : null;
+  };
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -31,13 +60,13 @@ const MovieDetail = () => {
     try {
       const storedToken = localStorage.getItem("token");
       const decodedToken = jwtDecode(storedToken);
-      console.log(decodedToken.id)
+
       const response = await axios.post(
         `http://localhost:8005/movies/${id}/comments`,
         {
           comment: userComment,
-          userId: decodedToken.id
-
+          userId: decodedToken.id,
+          userRating,
         }
       );
 
@@ -46,6 +75,7 @@ const MovieDetail = () => {
 
       // Clear the input field after submission
       setUserComment("");
+      setUserRating(0);
     } catch (error) {
       console.error("Error submitting comment: ", error);
     }
@@ -54,6 +84,14 @@ const MovieDetail = () => {
   if (!movie) {
     return <div className="loading-container">Loading...</div>;
   }
+
+  const opts = {
+    height: "390",
+    width: "640",
+    playerVars: {
+      autoplay: 1,
+    },
+  };
 
   return (
     <>
@@ -64,43 +102,72 @@ const MovieDetail = () => {
         <div className="movie-info">
           <p className="info">Year: {movie.year}</p>
           <p className="info">Runtime: {movie.runtime}</p>
-          <p className="info">Rating: {movie.rating}</p>
+          <p className="info">IMDBRating: {movie.rating}</p>
           <p className="info">Description: {movie.description}</p>
           <p className="info">Director: {movie.director}</p>
           <p className="info">Stars: {movie.stars}</p>
           <p className="info">Language: {movie.language}</p>
-          <p className="info">Status: {movie.status}</p>
-          <a
-            className="trailer-link"
-            href={movie.trailer}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Watch Trailer
-          </a>
+          {movie.trailerVideoId && (
+            <YouTube
+              videoId={movie.trailerVideoId}
+              opts={opts}
+              onClose={() => setTrailerOpen(false)}
+              isOpen={trailerOpen}
+            />
+          )}{" "}
         </div>
-        <div className="user-comment-section" style={{ lineHeight: "3rem" }}>
-          <h2>Comments</h2>
-          {loadingComments ? (
-            <p>Loading comments...</p>
-          ) : (
-            <ul>
-              {comments.map((comment) => (
-                <li key={comment.id}>{comment.comment}</li>
-              ))}
-            </ul>
-          )}
-          <form onSubmit={handleCommentSubmit}>
+        <div className="user-comment-section">
+          <form onSubmit={handleCommentSubmit} className="comment-form">
+            <StarRating onChange={(rating) => setUserRating(rating)} />
             <textarea
               placeholder="Write your comment..."
               value={userComment}
               onChange={(e) => setUserComment(e.target.value)}
               required
+              className="comment-input"
             ></textarea>
-            <button type="submit">Submit Comment</button>
+            <button type="submit" className="comment-submit">
+              Submit Comment
+            </button>
           </form>
+          {comments ? (
+            <>
+              <h2>Comments</h2>
+              <ul className="comments-list">
+                {comments?.map((comment) => (
+                  <li key={comment.id} className="comment-item">
+                    <div className="comment-header">
+                      <p className="comment-user">
+                        {comment?.user?.firstName}:
+                      </p>
+                      {/* <StarRating readOnly rating={comment.userRating} /> */}
+                    </div>
+                    <p className="comment-text">{comment.comment}</p>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            ""
+          )}
+          {/* <h2 className="comments-heading">Comments</h2>
+          {loadingComments ? (
+            <p>Loading comments...</p>
+          ) : (
+            <ul className="comments-list">
+              {comments?.map((comment) => (
+                <li key={comment.id} className="comment-item">
+                  <div className="comment-header">
+                    <p className="comment-user">{comment?.user?.firstName}:</p>
+                  </div>
+                  <p className="comment-text">{comment.comment}</p>
+                </li>
+              ))}
+            </ul>
+          )} */}
         </div>
       </div>
+
       <div className="HomeFooter">
         <Footer />
       </div>
