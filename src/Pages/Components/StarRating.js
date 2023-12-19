@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 
-const StarRating = ({ onChange }) => {
+export const StarRating = ({ onChange }) => {
   const [rating, setRating] = useState(0);
 
   const handleStarClick = (selectedRating) => {
     setRating(selectedRating);
     onChange(selectedRating);
   };
-  console.log("ratinf", rating);
+  
   return (
     <div style={{ display: "flex", justifyContent: "flex-end" }}>
       <p style={{ marginRight: "1rem" }}>Rate:</p>
@@ -28,4 +28,19 @@ const StarRating = ({ onChange }) => {
   );
 };
 
-export default StarRating;
+export const StarRatingDisplay = ({ rating }) => {
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      const filled = i <= rating;
+      stars.push(
+        <span key={i} className={`star ${filled ? 'filled' : ''}`}>
+          ★
+        </span>
+      );
+    }
+    return stars;
+  };
+
+  return <div className="star-rating">{renderStars()}</div>;
+};

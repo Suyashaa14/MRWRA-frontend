@@ -6,7 +6,7 @@ import "./Components/styles/MovieDetails.css";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import jwtDecode from "jwt-decode";
-import StarRating from "./Components/StarRating";
+import {StarRating, StarRatingDisplay} from "./Components/StarRating";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -120,7 +120,7 @@ const MovieDetail = () => {
           <form onSubmit={handleCommentSubmit} className="comment-form">
             <StarRating onChange={(rating) => setUserRating(rating)} />
             <textarea
-              placeholder="Write your comment..."
+              placeholder="Write your co  ment..."
               value={userComment}
               onChange={(e) => setUserComment(e.target.value)}
               required
@@ -134,17 +134,21 @@ const MovieDetail = () => {
             <>
               <h2>Comments</h2>
               <ul className="comments-list">
-                {comments?.map((comment) => (
-                  <li key={comment.id} className="comment-item">
-                    <div className="comment-header">
-                      <p className="comment-user">
-                        {comment?.user?.firstName}:
-                      </p>
-                      {/* <StarRating readOnly rating={comment.userRating} /> */}
-                    </div>
-                    <p className="comment-text">{comment.comment}</p>
-                  </li>
-                ))}
+              {comments?.map((comment) => (
+                <li key={comment.id} className="comment-item">
+                  <div className="comment-header">
+                    <p className="comment-user">
+                      {comment?.user?.firstName}:
+                    </p>
+                    {comment.userRating !== null && (
+                      <div className="comment-rating">
+                        <StarRatingDisplay rating={comment.userRating} />
+                      </div>
+                    )}
+                  </div>
+                  <p className="comment-text">{comment.comment}</p>
+                </li>
+              ))}
               </ul>
             </>
           ) : (
