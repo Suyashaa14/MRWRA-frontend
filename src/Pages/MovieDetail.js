@@ -6,7 +6,8 @@ import "./Components/styles/MovieDetails.css";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import jwtDecode from "jwt-decode";
-import {StarRating, StarRatingDisplay} from "./Components/StarRating";
+import { StarRating, StarRatingDisplay } from "./Components/StarRating";
+import { useNavigate } from "react-router-dom";
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -16,15 +17,20 @@ const MovieDetail = () => {
   const [loadingComments, setLoadingComments] = useState(false);
   const [trailerOpen, setTrailerOpen] = useState(false);
   const [userRating, setUserRating] = useState(0);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    // Fetch movie details
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+  }, [navigate]);
+  useEffect(() => {
     axios
       .get(`http://localhost:8005/movies/${id}`)
       .then((response) => {
         setMovie(response.data);
 
-        // If the trailer URL is available, extract the video ID and update the movie object
         if (response.data.trailer) {
           const videoId = extractYouTubeVideoId(response.data.trailer);
           setMovie((prevMovie) => ({ ...prevMovie, trailerVideoId: videoId }));
@@ -34,7 +40,6 @@ const MovieDetail = () => {
         console.error("Error fetching movie details: ", error);
       });
 
-    // Fetch comments for the movie
     axios
       .get(`http://localhost:8005/movies/${id}/comments`)
       .then((response) => {
@@ -46,7 +51,6 @@ const MovieDetail = () => {
   }, [id]);
 
   const extractYouTubeVideoId = (url) => {
-    // Example URL: https://www.youtube.com/watch?v=VIDEO_ID
     const match = url.match(
       /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
     );
@@ -56,7 +60,6 @@ const MovieDetail = () => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
-    // Submit the user's comment
     try {
       const storedToken = localStorage.getItem("token");
       const decodedToken = jwtDecode(storedToken);
@@ -70,10 +73,8 @@ const MovieDetail = () => {
         }
       );
 
-      // Update the comments state with the new comment
       setComments([...comments, response.data]);
 
-      // Clear the input field after submission
       setUserComment("");
       setUserRating(0);
     } catch (error) {
@@ -134,21 +135,21 @@ const MovieDetail = () => {
             <>
               <h2>Comments</h2>
               <ul className="comments-list">
-              {comments?.map((comment) => (
-                <li key={comment.id} className="comment-item">
-                  <div className="comment-header">
-                    <p className="comment-user">
-                      {comment?.user?.firstName}:
-                    </p>
-                    {comment.userRating !== null && (
-                      <div className="comment-rating">
-                        <StarRatingDisplay rating={comment.userRating} />
-                      </div>
-                    )}
-                  </div>
-                  <p className="comment-text">{comment.comment}</p>
-                </li>
-              ))}
+                {comments?.map((comment) => (
+                  <li key={comment.id} className="comment-item">
+                    <div className="comment-header">
+                      <p className="comment-user">
+                        {comment?.user?.firstName}:
+                      </p>
+                      {comment.userRating !== null && (
+                        <div className="comment-rating">
+                          <StarRatingDisplay rating={comment.userRating} />
+                        </div>
+                      )}
+                    </div>
+                    <p className="comment-text">{comment.comment}</p>
+                  </li>
+                ))}
               </ul>
             </>
           ) : (

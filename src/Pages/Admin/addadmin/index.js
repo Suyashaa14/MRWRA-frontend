@@ -75,14 +75,15 @@ const AddAdmin = () => {
           sx={{
             padding: "30px",
             textAlign: "center",
-            background: "#1a1a1a",
+            background: "#fff", // Change the background color
+            borderRadius: "15px", // Add rounded corners
           }}
         >
           <Typography
             component="h1"
             variant="h4"
             gutterBottom
-            style={{ color: "#fff" }}
+            style={{ color: "#333" }} // Change text color
           >
             Add Admin
           </Typography>
@@ -95,7 +96,6 @@ const AddAdmin = () => {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               required
-              InputProps={{ style: { color: "#fff" } }}
             />
             <TextField
               label="Last Name"
@@ -105,7 +105,6 @@ const AddAdmin = () => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               required
-              InputProps={{ style: { color: "#fff" } }}
             />
             <TextField
               label="Email"
@@ -116,7 +115,6 @@ const AddAdmin = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              InputProps={{ style: { color: "#fff" } }}
             />
             <TextField
               label="Password"
@@ -127,13 +125,12 @@ const AddAdmin = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              InputProps={{ style: { color: "#fff" } }}
             />
             <Button
               type="submit"
               variant="contained"
               fullWidth
-              style={{ marginTop: "20px", backgroundColor: "#FF0000" }}
+              style={{ marginTop: "20px", backgroundColor: "#ff1744" }} // Change the button color
             >
               Add Admin
             </Button>
@@ -141,7 +138,7 @@ const AddAdmin = () => {
               <Typography
                 variant="body2"
                 color="error"
-                style={{ marginTop: "10px", color: "#fff" }}
+                style={{ marginTop: "10px", color: "#ff1744" }}
               >
                 {error}
               </Typography>

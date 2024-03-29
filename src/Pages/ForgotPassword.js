@@ -38,7 +38,7 @@ function ForgotPassword() {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        background: "#f5f5f5", // Set the background color to match the Login page
+        background: "#f5f5f5",
       }}
     >
       <Container component="main" maxWidth="xs">

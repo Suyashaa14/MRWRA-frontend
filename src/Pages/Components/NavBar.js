@@ -39,10 +39,15 @@ const NavBar = () => {
           <Link to="/movie" className="navbar__link">
             Movies
           </Link>
-          {userData.role == "admin" && (
-            <Link to="/addadmin" className="navbar__link">
-              Add Admin
-            </Link>
+          {userData.role == "superadmin" && (
+            <>
+              <Link to="/addadmin" className="navbar__link">
+                Add Admin
+              </Link>
+              <Link to="/addmovierequest" className="navbar__link">
+                Movie Add Request
+              </Link>
+            </>
           )}
 
           <Link to="/about" className="navbar__link">

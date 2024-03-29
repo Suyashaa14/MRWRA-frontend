@@ -276,14 +276,18 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const moviesSectionRef = useRef(null);
   const navigate = useNavigate();
-
   useEffect(() => {
-    // Fetch movies and genres from your NestJS API
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+  }, [navigate]);
+  useEffect(() => {
     axios
       .get("/movies")
       .then((response) => {
         setMovies(response.data);
-        // Extract unique genres from the movies
         const uniqueGenres = [
           ...new Set(response.data.map((movie) => movie.genre)),
         ];
@@ -296,7 +300,6 @@ const Home = () => {
 
   useEffect(() => {
     if (selectedGenres.length > 0) {
-      // Fetch movies based on selected genres from your NestJS API
       axios
         .get(`/movies/filterByGenres?genres=${selectedGenres.join(",")}`)
         .then((response) => {
@@ -316,7 +319,6 @@ const Home = () => {
           console.error("Error fetching filtered movies: ", error);
         });
     } else {
-      // If no genres are selected, show all movies
       setCurrMovies([...movies]);
     }
   }, [selectedGenres, sortOrder, movies]);

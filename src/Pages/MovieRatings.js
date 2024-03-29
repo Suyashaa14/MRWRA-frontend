@@ -2,14 +2,23 @@ import React, { useEffect, useState } from "react";
 import NavBar from "./Components/NavBar";
 import Footer from "./Components/Footer";
 import "./Components/styles/MovieRatings.css";
+import { useNavigate } from "react-router-dom";
 
 const MovieRatingPage = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState("");
   const [movieInfo, setMovieInfo] = useState([]);
 
+  const navigate = useNavigate();
   useEffect(() => {
-    // Fetch the list of all movies
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     fetch("/api/movies")
       .then((response) => response.json())
       .then((data) => {
@@ -19,11 +28,9 @@ const MovieRatingPage = () => {
 
   const handleMovieChange = (event) => {
     setSelectedMovie(event.target.value);
-    setMovieInfo([]); // Clear previous movie info when selecting a new movie
   };
 
   const handleViewRating = () => {
-    // Fetch movie information including ID, title, review, ratings, and sentiment analysis
     fetch(`/api/movie-info?id=${selectedMovie}`)
       .then((response) => response.json())
       .then((data) => {

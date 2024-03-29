@@ -1,10 +1,19 @@
-import React from "react";
 import { Container, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import MovieList from "./Admin";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 
 const About = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+  }, [navigate]);
   return (
     <>
       <NavBar />

@@ -15,6 +15,7 @@ import AddMovie from "./Pages/Admin/addmovie";
 import ForgotPassword from "./Pages/ForgotPassword";
 import ResetPassword from "./Pages/ResetPassword";
 import AddAdmin from "./Pages/Admin/addadmin";
+import MovieAddRequestPage from "./Pages/SuperAdmin/MovieAddRequest";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/addadmin" element={<AddAdmin />} />
+          <Route path="/addmovierequest" element={<MovieAddRequestPage />} />
           <Route path="/movie/:id" element={<MovieDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/movieratings" element={<MovieRatings />} />

@@ -44,17 +44,6 @@ const AddMovie = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create a FormData object to send form data
-    // const formData = new FormData();
-    // console.log(movieData);
-    // Append each form field to the FormData object
-    // for (const key in movieData) {
-    //   formData.append(key, movieData[key]);
-    // }
-
-    // You can also add additional fields to the FormData object if needed
-    // formData.append("movieId", "tt1234567");
-
     try {
       const response = await axios.post(
         `http://localhost:8005/movies/create`,
